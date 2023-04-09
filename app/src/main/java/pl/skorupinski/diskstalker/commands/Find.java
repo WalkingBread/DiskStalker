@@ -6,6 +6,7 @@ import org.apache.commons.cli.CommandLine;
 
 import pl.skorupinski.diskstalker.core.FileSystem;
 import pl.skorupinski.diskstalker.utils.Colors;
+import pl.skorupinski.diskstalker.utils.ProgressBar;
 
 public class Find extends Command {
 
@@ -39,11 +40,13 @@ public class Find extends Command {
 
         List<String> results = null;
 
+        ProgressBar progress = new ProgressBar(20);
+
         if(cmd.hasOption("path")) {
             String directory = cmd.getOptionValue("path");
-            results = FileSystem.searchFor(name, directory, searchingForFile, searchingForDirectory);
+            results = FileSystem.searchFor(name, directory, searchingForFile, searchingForDirectory, progress);
         } else {
-            results = FileSystem.searchEverywhereFor(name, searchingForFile, searchingForDirectory);
+            results = FileSystem.searchEverywhereFor(name, searchingForFile, searchingForDirectory, progress);
         }
         
         for(String result : results) {

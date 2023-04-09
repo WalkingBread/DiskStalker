@@ -8,6 +8,7 @@ import org.apache.commons.cli.*;
 import pl.skorupinski.diskstalker.commands.Command;
 import pl.skorupinski.diskstalker.commands.Find;
 import pl.skorupinski.diskstalker.core.FileSystem;
+import pl.skorupinski.diskstalker.utils.ProgressBar;
 
 public class DiskStalker {
 
