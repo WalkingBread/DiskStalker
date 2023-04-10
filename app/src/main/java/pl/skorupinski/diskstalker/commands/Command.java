@@ -73,4 +73,8 @@ public abstract class Command {
             execute(cmd);
         }
     }
+
+    public void printHelp() {
+        help.printHelp(name, options);
+    }
 }

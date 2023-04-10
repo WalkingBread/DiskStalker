@@ -1,5 +1,6 @@
 package pl.skorupinski.diskstalker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -7,14 +8,17 @@ import org.apache.commons.cli.*;
 
 import pl.skorupinski.diskstalker.commands.Command;
 import pl.skorupinski.diskstalker.commands.Find;
-import pl.skorupinski.diskstalker.core.FileSystem;
-import pl.skorupinski.diskstalker.utils.ProgressBar;
+import pl.skorupinski.diskstalker.commands.Man;
 
 public class DiskStalker {
 
     public CommandLineParser parser;
 
     public HashMap<String, Command> commands;
+
+    public final String description = "DiskStalker is a command line utility allowing "
+                                    + "for efficient disk management including fast " 
+                                    + "resource searching.";
 
     public DiskStalker() {
         parser = new DefaultParser();
@@ -26,6 +30,9 @@ public class DiskStalker {
     }
 
     public void parseCommand(String[] args) {
+        if(args.length == 0) {
+            return;
+        }
         String cmdName = args[0];
         if(commands.containsKey(cmdName)) {
             Command command = commands.get(cmdName);
@@ -36,8 +43,8 @@ public class DiskStalker {
     public static void main(String[] args) {
         DiskStalker stalker = new DiskStalker();
         stalker.addCommand(new Find());
+        stalker.addCommand(new Man(stalker.description, new ArrayList<>(stalker.commands.values())));
 
-        String[] x = {"find", "-name", "filestalker", "-file", "-path", "C:/"}; 
-        stalker.parseCommand(x);
+        stalker.parseCommand(args);
     }
 }
